@@ -1,0 +1,26 @@
+#!/bin/csh
+
+source /opt/ngat/etc/cshrc
+
+source ${DEPLOY_BIN}/class_setup
+source ${DEPLOY_BIN}/x_setup
+
+set dat=`date -u "+%Y-%m-%d %H:%M:%S"`
+
+
+while (1) 
+
+    echo "Starting BSS controller..."
+    $JAVA ngat.bss.test.RunBeamSteeringSystem /occ/misc/config/bss.properties
+
+    set mexit = $status
+
+    if ($mexit == 12) then
+    # restart
+	continue
+    else if ($mexit == 13) then
+    # shutdown
+	exit 0
+    endif
+
+end

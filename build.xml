@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+
+<project name="BSS" default="compile" basedir=".">
+
+  <description>
+    "Beam Steering System - Development"
+  </description>
+
+  <property environment="env"/>
+
+  <!-- Source Directories -->
+  <property name="project.dir" value="." />
+  <property name="config.dir" value="${project.dir}/config" />
+  <property name="script.dir" value="${project.dir}/scripts" />
+  <property name="src.dir" value="${project.dir}/java" />
+
+  <!-- Build Directories -->
+  <property name = "build.dir" value = "${env.HOME}/build/tcm"/>
+  <property name = "class.dir"  value = "${build.dir}/java"/>
+
+  <property name= "javalib.dir" value="${env.LT_HOME}/bin/javalib" />
+  <property name= "javalib.3p.dir" value="${env.LT_HOME}/bin/javalib_third_party"/>
+  <property name= "javalib.3p.jibx.dir" value="${env.LT_HOME}/bin/javalib_third_party/jibx"/>
+
+  <property name="jar" value="ngat_bss.jar" />
+
+
+  <!-- Prepare build directories -->
+  <target name = "prepare"
+	  description = "Prepare build directories">
+    <mkdir dir = "${class.dir}"/>
+    <tstamp>
+      <format property="BUILD" pattern="yyyyMMdd_HHmm" locale="en"/>
+    </tstamp>
+    <echo message = "Build date: ${BUILD}"/>
+  </target>
+  
+
+  <!-- Cleanup dross -->
+  <target name = "clean"
+	  description = "Clean out dross">
+    <delete verbose = "true" >       
+      <fileset dir="." includes="**/*~" defaultexcludes = "false"/>
+    </delete>
+  </target>
+
+  <!-- Copy configs -->
+  
+  <!-- Compile all sources -->
+  
+  <target name = "compile" depends = "prepare" 
+	  description = "Compile sources">
+    <javac srcdir  = "${src.dir}" 
+           destdir = "${class.dir}"
+           source="1.5"
+           target="1.5"
+           debug = "on">  
+      
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="${lib.dir}">
+          <include name = "*.jar"/>       
+        </fileset>
+        <fileset dir="${javalib.3p.dir}">
+          <include name = "*.jar"/>
+        </fileset>
+        <fileset dir="${javalib.3p.jibx.dir}">
+          <include name = "*.jar"/>
+        </fileset>
+      </classpath>
+    </javac>
+  </target>
+  
+  <!-- Generate RMI stubs and skeletons -->
+
+  <target name        = "rmic"
+          depends     = "compile"
+          description = "Generate RMI stubs">
+    <rmic debug = "true"
+          base     = "${class.dir}"
+          
+	  stubversion = "1.2">
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="${lib.dir}">
+          <include name = "*.jar"/>       
+        </fileset>
+      </classpath>
+    </rmic>
+  </target>
+
+
+  <!-- Deploy to JAR -->
+
+  <target name = "jar" 
+	  depends = "compile"
+	  description = "Create class JAR">
+    <echo message = "Build number: ${BUILD}"/>
+
+    <echo message = "Jarring"/>
+    <jar jarfile = "${javalib.dir}/${jar}" basedir = "${class.dir}" update = "true" />
+    <echo message="Created jar: ${jar}"/>
+  </target>
+
+
+  <!-- API Docs -->
+
+  <target name = "apidocs"
+	  description = "Generate API documentation">
+    
+    <javadoc destdir = "/home/dev/public_html/bss/javadocs"
+             author = "true"
+             version = "true"
+             private = "true"
+             verbose = "true" 
+             breakiterator = "true"
+             windowtitle="BSS">
+
+      <classpath>
+        <pathelement path="${classpath}"/>
+        <fileset dir="/home/dev/bin/javalib">
+          <include name = "*.jar"/> 
+        </fileset>
+      </classpath>
+      
+      <packageset dir="." defaultexcludes="yes" >
+        <include name="ngat/bss/**" />         
+      </packageset>
+
+    </javadoc>
+    
+  </target>
+
+
+  <!-- TODO Deploy - copy config and src to dist dir along with jar file then tarup -->
+
+
+
+</project>
+
