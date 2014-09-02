@@ -58,7 +58,7 @@
       
       <classpath>
         <pathelement path="${classpath}"/>
-        <fileset dir="${lib.dir}">
+        <fileset dir="${javalib.dir}">
           <include name = "*.jar"/>       
         </fileset>
         <fileset dir="${javalib.3p.dir}">
@@ -82,7 +82,7 @@
 	  stubversion = "1.2">
       <classpath>
         <pathelement path="${classpath}"/>
-        <fileset dir="${lib.dir}">
+        <fileset dir="${javalib.dir}">
           <include name = "*.jar"/>       
         </fileset>
       </classpath>

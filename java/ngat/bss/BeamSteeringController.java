@@ -8,13 +8,12 @@ import java.util.Map;
 import java.util.Vector;
 
 import sun.net.InetAddressCachePolicy;
-
 import ngat.astrometry.AstroFormatter;
 import ngat.dichroic.Dichroic;
 import ngat.fits.FitsHeaderCardImage;
 import ngat.phase2.IOpticalSlideConfig;
 import ngat.phase2.XOpticalSlideConfig;
-import ngat.phase2.XTipTiltAbsoluteOffsetConfig;
+import ngat.phase2.XTipTiltAbsoluteOffset;
 import ngat.util.ConfigurationProperties;
 import ngat.util.PropertiesConfigurable;
 import ngat.util.logging.LogGenerator;
@@ -51,7 +50,7 @@ public class BeamSteeringController implements PropertiesConfigurable {
 
 	// private XTipTiltAbsoluteOffsetConfig upperTiptilt;
 
-	private XTipTiltAbsoluteOffsetConfig lowerTiptilt;
+	private XTipTiltAbsoluteOffset lowerTiptilt;
 
 	private String upperSlideHostName;
 
