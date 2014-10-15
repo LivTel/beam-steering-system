@@ -15,7 +15,7 @@
   <property name="src.dir" value="${project.dir}/java" />
 
   <!-- Build Directories -->
-  <property name = "build.dir" value = "${env.HOME}/build/tcm"/>
+  <property name = "build.dir" value = "${env.HOME}/build/bss"/>
   <property name = "class.dir"  value = "${build.dir}/java"/>
 
   <property name= "javalib.dir" value="${env.LT_HOME}/bin/javalib" />
