@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# -----------------------------------------------
+# Init launcher for: BSS
+# -----------------------------------------------
+
+. /opt/ngat/etc/bashrc
+
+# Source function library.
+/etc/rc.d/init.d/functions
+
+DAT=`date -u +"%Y%m%d_%H%M"`
+BSS_CONSOLE_LOG_FILE=$DEPLOY_TMP/bss.log
+
+
+/bin/mv -f ${BSS_CONSOLE_LOG_FILE} $DEPLOY_TMP/bss.log.$DAT
+
+echo "Starting BSS, Log to: ${BSS_CONSOLE_LOG_FILE} "
+$DEPLOY_BIN/bss_control  1>> ${BSS_CONSOLE_LOG_FILE} 2>&1 &
+
+exit 0
